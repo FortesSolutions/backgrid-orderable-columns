@@ -40,7 +40,7 @@ var orderHandler = new Backgrid.Extension.OrderableColumns({
   grid: pageableGrid,
   sizeAbleColumns: sizeAbleCol
 });
-$backgridContainer2.find('thead').before(orderHandler.render().el);
+$backgridContainer.find('thead').before(orderHandler.render().el);
 ```
 
 ## License
