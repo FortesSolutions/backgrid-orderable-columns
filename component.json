@@ -1,0 +1,22 @@
+{
+  "name": "backgrid-orderable-columns",
+  "repo": "WRidder/backgrid-orderable-columns",
+  "description": "Backgrid.js extension for (re)orderable columns.",
+  "version": "0.0.1",
+  "keywords": [
+    "backbone",
+    "backgrid"
+  ],
+  "main": "backgrid-orderable-columns.js",
+  "scripts": [
+    "backgrid-orderable-columns.js"
+  ],
+  "styles": [
+    "backgrid-orderable-columns.css"
+  ],
+  "dependencies": {
+    "jashkenas/backbone": "*",
+    "wyuenho/backgrid": "0.3.5"
+  },
+  "license": "MIT"
+}
