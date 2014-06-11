@@ -1,4 +1,4 @@
-# Backgrid.js - (Re)orderable columns PoC
+# Backgrid.js - (Re)orderable columns
 Warning! This extension is not production ready yet, just a mere proof of concept. It lacks documentation, automatic testing and edge-case tests.
 
 To discuss this extension, see [this](https://github.com/wyuenho/backgrid/issues/6) backgrid issue;
@@ -11,7 +11,7 @@ Online demo of can be found [here](http://techwuppet.com/backgrid_poc_demo/)
 - Firefox
 - Chrome
 
-## (Re)orderable columns
+## Features
 - Order columns based on 'position' attribute
 - Dependency: backgrid-sizeable-columns
 - Supports [grouped columns](https://github.com/WRidder/backgrid-grouped-columns)
