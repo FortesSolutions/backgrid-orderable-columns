@@ -47,134 +47,166 @@
       view.createIndicators();
 
       // Attach
-      view.header.$el.find('th').each(function(index, columnEl) {
-        // Get matching col element
-        var $column = $(columnEl);
-        var $col = view.sizeAbleColumns.$el.find("col").eq(index);
-        var columnModel = view.columns.get($col.data("column-id"));
+      var $rows = view.header.$el.find('tr');
+      $rows.each(function(rowIndex, rowEl) {
+        // Iterate over th elements
+        $(rowEl).children("th").each(function(index, headerEl) {
+          // Get matching col element(s)
+          var $theader = $(headerEl);
 
-        if (typeof columnModel == "undefined" || typeof columnModel.get("orderable") == "undefined" || columnModel.get("orderable")) {
-          // Make draggable
-          $column.on("mousedown", function(e) {
-            var startX = $column.position().left;
-            var startPageX = e.pageX;
-            var $doc = $(document);
-            var $closestIndicator;
+          var columnModel;
+          var orderable;
+          var startIndex = _.indexOf(view.headerElements, headerEl);
+          var columnSpan = 1;
+          if (startIndex > -1) {
+            var $col = view.sizeAbleColumns.$el.find("col").eq(startIndex);
+            columnModel = view.columns.get($col.data("column-id"));
+            orderable = typeof columnModel.get("orderable") == "undefined" || columnModel.get("orderable");
+          }
+          else {
+            orderable = false;
+            var headerRows = view.grid.header.headerRows;
+            if (headerRows) {
+              var subColumnNames = headerRows[rowIndex].columns.at(index).get("childColumns");
+              startIndex = view.columns.indexOf(view.columns.get(_.first(view.columns.where({ name: subColumnNames[0]}))));
+              columnSpan = subColumnNames.length;
+              orderable = true;
+            }
+          }
 
-            // Helper function to find closest indicator
-            var closest = null;
-            var closestIndex = null;
-            var highlightClosestIndicator = function highlightClosestIndicator(newLeftPos) {
-              $.each(view.indicatorPositions, function(index){
-                if (closest == null || Math.abs(this - newLeftPos) < Math.abs(closest - newLeftPos)) {
-                  closest = this;
-                  closestIndex = index;
-                }
-              });
+          if (orderable) {
+            // Make draggable
+            $theader.on("mousedown", function(e) {
+              var startX = $theader.position().left;
+              var startPageX = e.pageX;
+              var $doc = $(document);
+              var $closestIndicator;
 
-              if ($closestIndicator) {
-                $closestIndicator.removeClass('orderable-indicator-active');
-              }
-
-              var oldIndex = index;
-              var newIndex = closestIndex;
-              var movedRight = oldIndex < newIndex;
-              if (index != newIndex && ((movedRight && newIndex != oldIndex + 1) || !movedRight) && thresHoldPassed) {
-                $closestIndicator = view.indicators[newIndex].addClass('orderable-indicator-active');
-              }
-            };
-
-            // Create copy of column element
-            var $columnDraggable = $("<div></div>")
-              .addClass("orderable-draggable")
-              .hide()
-              .appendTo(view.$el)
-              .width($column.outerWidth())
-              .height($column.outerHeight())
-              .css({
-                left: startX,
-                top: $column.position().top
-              });
-
-            // Follow the mouse
-            var thresHoldPassed = false;
-            var mouseMoveHandler = function(evt) {
-              var newLeftPos = startX + (evt.pageX - startPageX);
-              var delta = Math.abs(startX - newLeftPos);
-
-              if (thresHoldPassed) {
-                // Highlight nearest indicator
-                highlightClosestIndicator(newLeftPos);
-                $column.addClass("orderable-ordering");
-
-                // Apply mouse change to handler
-                $columnDraggable.css({
-                  left: newLeftPos
-                }).show();
-              }
-              else if (delta >= view.moveThreshold) {
-                thresHoldPassed = true;
-              }
-
-            };
-            $doc.on("mousemove", mouseMoveHandler);
-
-            // Add handler to listen for mouseup
-            var mouseUpHandler = function(evt) {
-              // Cleanup
-              $columnDraggable.remove();
-              if ($closestIndicator) {
-                $closestIndicator.removeClass('orderable-indicator-active');
-              }
-              $column.removeClass("orderable-ordering");
-              $doc.off("mouseup", mouseUpHandler);
-              $doc.off("mousemove", mouseMoveHandler);
-
-              var oldIndex = index;
-              var newIndex = closestIndex;
-              var movedRight = oldIndex < newIndex;
-              if (index != newIndex && ((movedRight && newIndex != oldIndex + 1) || !movedRight) && thresHoldPassed) {
-                view.columns.each(function(model, ind) {
-                  if (movedRight) {
-                    if (ind > Math.min(oldIndex, newIndex) && ind < Math.max(oldIndex, newIndex)) {
-                      model.set('position', ind, {silent: true});
-                    }
-                    else if (index == ind) {
-                      model.set('position', newIndex, {silent: true});
-                    }
-                  }
-                  else {
-                    if (ind >= Math.min(oldIndex, newIndex) && ind < Math.max(oldIndex, newIndex)) {
-                      model.set('position', ind + 2, {silent: true});
-                    }
-                    else if (index == ind) {
-                      model.set('position', newIndex + 1, {silent: true});
-                    }
+              // Helper function to find closest indicator
+              var closest = null;
+              var closestIndex = null;
+              var validMove = false;
+              var highlightClosestIndicator = function highlightClosestIndicator(newLeftPos) {
+                $.each(view.indicatorPositions, function(indx){
+                  if (closest == null || Math.abs(this - newLeftPos) < Math.abs(closest - newLeftPos)) {
+                    closest = this;
+                    closestIndex = indx;
                   }
                 });
 
-                // Update all relevant aspects
-                var columnSort = function() {
-                  var $el = $(this);
-                  var $el1 = $el.children().eq(oldIndex);
-                  var $el2 = $el.children().eq(newIndex);
-                  $el1.detach().insertBefore($el2);
-                };
-                view.grid.$el.find('tbody tr').each(columnSort);
-                view.columns.sort();
+                if ($closestIndicator) {
+                  $closestIndicator.removeClass('orderable-indicator-active');
+                }
 
-                // Trigger event indicating column reordering
-                view.columns.trigger("ordered");
-              }
+                var oldIndex = startIndex;
+                var newIndex = closestIndex;
+                var movedRight = oldIndex < newIndex;
+                validMove = oldIndex != newIndex && ((movedRight && (newIndex < oldIndex + 1 ||
+                  newIndex > oldIndex + columnSpan)) || !movedRight) && thresHoldPassed;
+                if (validMove) {
+                  $closestIndicator = view.indicators[newIndex].addClass('orderable-indicator-active');
+                }
+              };
 
-              // Set new position values
-              evt.preventDefault();
-            };
-            $doc.on("mouseup", mouseUpHandler);
+              // Create copy of column element
+              var $columnDraggable = $("<div></div>")
+                .addClass("orderable-draggable")
+                .hide()
+                .appendTo(view.$el)
+                .width($theader.outerWidth())
+                .height($theader.outerHeight())
+                .css({
+                  left: startX,
+                  top: $theader.position().top
+                });
 
-            e.preventDefault();
-          });
-        }
+              // Follow the mouse
+              var thresHoldPassed = false;
+              var mouseMoveHandler = function(evt) {
+                var newLeftPos = startX + (evt.pageX - startPageX);
+                var delta = Math.abs(startX - newLeftPos);
+
+                if (thresHoldPassed) {
+                  // Highlight nearest indicator
+                  highlightClosestIndicator(newLeftPos);
+                  $theader.addClass("orderable-ordering");
+
+                  // Apply mouse change to handler
+                  $columnDraggable.css({
+                    left: newLeftPos
+                  }).show();
+                }
+                else if (delta >= view.moveThreshold) {
+                  thresHoldPassed = true;
+                }
+
+              };
+              $doc.on("mousemove", mouseMoveHandler);
+
+              // Add handler to listen for mouseup
+              var mouseUpHandler = function(evt) {
+                // Cleanup
+                evt.preventDefault();
+                $columnDraggable.remove();
+                if ($closestIndicator) {
+                  $closestIndicator.removeClass('orderable-indicator-active');
+                }
+                $theader.removeClass("orderable-ordering");
+                $doc.off("mouseup", mouseUpHandler);
+                $doc.off("mousemove", mouseMoveHandler);
+
+                if (validMove) {
+                  var oldIndex = startIndex;
+                  var newIndex = closestIndex;
+                  var movedRight = oldIndex < newIndex;
+                  var deltaIndex = newIndex - oldIndex;
+
+                  view.columns.each(function(model, ind) {
+                    if (movedRight) {
+                      if (ind >= oldIndex && ind < oldIndex + columnSpan) {
+                        model.set('position', model.get("position") + deltaIndex - columnSpan, {silent: true});
+
+                      }
+                      else if (ind > oldIndex && ind < newIndex) {
+                        model.set('position', model.get("position") - columnSpan, {silent: true});
+                      }
+                    }
+                    else {
+                      if (ind >= oldIndex && ind < oldIndex + columnSpan) {
+                        model.set('position', model.get("position") + deltaIndex, {silent: true});
+
+                      }
+                      else if (ind > newIndex && ind < oldIndex) {
+                        model.set('position', model.get("position") + columnSpan, {silent: true});
+                      }
+                      else if (newIndex == ind) {
+                        model.set('position', model.get("position") + columnSpan, {silent: true});
+                      }
+                    }
+                  });
+
+                  // Update all relevant aspects
+                  var columnSort = function() {
+                    var $el = $(this);
+                    var $el1 = $el.children().slice(oldIndex, oldIndex + columnSpan);
+                    var $el2 = $el.children().eq(newIndex);
+                    $el1.detach().insertBefore($el2);
+                  };
+                  view.grid.$el.find('tbody tr').each(columnSort);
+
+                  // Trigger event indicating column reordering
+                  view.columns.trigger("ordered");
+
+                  // Sort columns
+                  view.columns.sort();
+                }
+              };
+              $doc.on("mouseup", mouseUpHandler);
+
+              e.preventDefault();
+            });
+          }
+        });
       });
 
       // Position drag handlers
@@ -197,10 +229,15 @@
     },
     attachEvents: function() {
       this.listenTo(this.columns, "change:resizeAble", this.render);
-      this.listenTo(this.columns, "resize", this.render);
-      this.listenTo(this.columns, "add remove sort", function() {
-        this.setHeaderElements();
-        this.render();
+      this.listenTo(this.columns, "resize", this.updateHandlerPosition);
+      this.listenTo(this.grid.collection, "backgrid:header:rendered", function() {
+        // Wait for callstack to be cleared
+        // TODO: see if we can do without this delay function
+        _.delay(function() {
+          this.setHeaderElements();
+          this.render();
+          this.updateHandlerPosition();
+        }.bind(this), 0);
       }.bind(this));
       this.listenTo(this.grid.collection, "backgrid:refresh", this.updateHandlerPosition);
     },
