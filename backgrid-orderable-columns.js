@@ -75,8 +75,17 @@
           }
 
           if (orderable) {
+            // Event helper function
+            var stopEvent = function(e) {
+              if(e.stopPropagation) e.stopPropagation();
+              if(e.preventDefault) e.preventDefault();
+              e.cancelBubble=true;
+              e.returnValue=false;
+            };
+
             // Make draggable
             $theader.on("mousedown", function(e) {
+              stopEvent(e);
               var startX = $theader.position().left;
               var startPageX = e.pageX;
               var $doc = $(document);
@@ -123,6 +132,7 @@
               // Follow the mouse
               var thresHoldPassed = false;
               var mouseMoveHandler = function(evt) {
+                stopEvent(evt);
                 var newLeftPos = startX + (evt.pageX - startPageX);
                 var delta = Math.abs(startX - newLeftPos);
 
@@ -146,7 +156,7 @@
               // Add handler to listen for mouseup
               var mouseUpHandler = function(evt) {
                 // Cleanup
-                evt.preventDefault();
+                stopEvent(evt);
                 $columnDraggable.remove();
                 if ($closestIndicator) {
                   $closestIndicator.removeClass('orderable-indicator-active');
@@ -202,8 +212,6 @@
                 }
               };
               $doc.on("mouseup", mouseUpHandler);
-
-              e.preventDefault();
             });
           }
         });
@@ -251,7 +259,7 @@
 
         // Get handler for current column and update position
         view.$el.children().filter("[data-column-index='" + index + "']")
-          .css("left", $column.position().left + "px");
+          .css("left", $column.position().left);
       });
     },
     setHeaderElements: function() {
