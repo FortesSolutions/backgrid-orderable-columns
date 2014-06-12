@@ -15,7 +15,7 @@
   else factory(root._, root.Backgrid, root.moment);
 
 }(this, function (_, Backgrid) {
-
+  "use strict";
 
   // Adds width support to columns
   Backgrid.Extension.OrderableColumns = Backbone.View.extend({
@@ -138,7 +138,7 @@
 
                 if (thresHoldPassed) {
                   // Highlight nearest indicator
-                  highlightClosestIndicator(newLeftPos);
+                  highlightClosestIndicator(evt.pageX - view.grid.$el.offset().left);
                   $theader.addClass("orderable-ordering");
 
                   // Apply mouse change to handler
