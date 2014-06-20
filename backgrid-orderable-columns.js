@@ -77,10 +77,14 @@
           if (orderable) {
             // Event helper function
             var stopEvent = function(e) {
-              if(e.stopPropagation) e.stopPropagation();
-              if(e.preventDefault) e.preventDefault();
-              e.cancelBubble=true;
-              e.returnValue=false;
+              if(e.stopPropagation) {
+                e.stopPropagation();
+              }
+              if(e.preventDefault) {
+                e.preventDefault();
+              }
+              e.cancelBubble = true;
+              e.returnValue = false;
             };
 
             // Make draggable
@@ -96,9 +100,9 @@
               var closestIndex = null;
               var validMove = false;
               var highlightClosestIndicator = function highlightClosestIndicator(newLeftPos) {
-                $.each(view.indicatorPositions, function(indx){
-                  if (closest == null || Math.abs(this - newLeftPos) < Math.abs(closest - newLeftPos)) {
-                    closest = this;
+                _.each(view.indicatorPositions, function(val, indx){
+                  if (closest == null || Math.abs(val - newLeftPos) < Math.abs(closest - newLeftPos)) {
+                    closest = val;
                     closestIndex = indx;
                   }
                 });
@@ -236,18 +240,19 @@
       });
     },
     attachEvents: function() {
-      this.listenTo(this.columns, "change:resizeAble", this.render);
-      this.listenTo(this.columns, "resize", this.updateHandlerPosition);
-      this.listenTo(this.grid.collection, "backgrid:header:rendered", function() {
+      var view = this;
+      view.listenTo(view.columns, "change:resizeAble", view.render);
+      view.listenTo(view.columns, "resize", view.updateHandlerPosition);
+      view.listenTo(view.grid.collection, "backgrid:header:rendered", function() {
         // Wait for callstack to be cleared
         // TODO: see if we can do without this delay function
         _.delay(function() {
-          this.setHeaderElements();
-          this.render();
-          this.updateHandlerPosition();
-        }.bind(this), 0);
-      }.bind(this));
-      this.listenTo(this.grid.collection, "backgrid:refresh", this.updateHandlerPosition);
+          view.setHeaderElements();
+          view.render();
+          view.updateHandlerPosition();
+        }, 0);
+      });
+      view.listenTo(view.grid.collection, "backgrid:refresh", view.updateHandlerPosition);
     },
     updateHandlerPosition: function() {
       var view = this;
