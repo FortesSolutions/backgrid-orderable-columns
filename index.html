@@ -1,1 +1,69 @@
-My GitHub Page
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/normalize.min.css">
+
+        <link rel="stylesheet" href="css/backgrid.css">
+        <link rel="stylesheet" href="css/backgrid-sizeable-columns.css">
+        <link rel="stylesheet" href="css/backgrid-grouped-columns.css">
+        <link rel="stylesheet" href="css/backgrid-orderable-columns.css">
+        <link rel="stylesheet" href="css/main.css">
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div id="container">
+            <h2>Backgrid PoC: Grouped columns,  (Re)sizeable columns & (Re)orderable columns</h2>
+            See:
+            <li><a href="https://github.com/WRidder/backgrid-sizeable-columns">Sizeable columns on GitHub</a></li>
+            <li><a href="https://github.com/WRidder/backgrid-grouped-columns">Grouped columns on GitHub</a></li>
+            <li><a href="https://github.com/WRidder/backgrid-orderable-columns">(Re)orderable columns on GitHub</a></li>
+            <br>
+            <button id="toggleHandlers" data-toggle="true">Toggle resize drag handler display</button>
+            <button id="toggleHandlerHeight" data-toggle="true">Toggle drag handler height</button>
+            <button id="toggleOrderHandler" data-toggle="true">Toggle orderable indicator display</button>
+            <button id="toggleColumn" data-toggle="true">Toggle Age 'renderable'</button>
+            <button id="addRemoveColumn" data-toggle="true">Remove ID column</button>
+            <div id="backgrid-container"></div>
+            <h3>Notes:</h3>
+            <ul>
+                <li>The ID column is restricted with max and minimum width</li>
+                <li>The active column has the same min/max width</li>
+                <li>The domestics, exports and total column are non-resizeable</li>
+                <li>The last column has an automatic width</li>
+                <li>The latitude and longitude columns have a min and max width</li>
+            </ul>
+        </div>
+
+
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+
+        <script src="js/plugins.js"></script>
+        <script src="js/underscore.js"></script>
+        <script src="js/backbone.js"></script>
+        <script src="js/backbone.paginator.js"></script>
+        <script src="js/backgrid.js"></script>
+        <script src="js/backgrid-paginator.js"></script>
+        <script src="js/backgrid-select-all.js"></script>
+        <script src="js/backgrid-filter.js"></script>
+        <script src="js/backgrid-sizeable-columns.js"></script>
+        <script src="js/backgrid-grouped-columns.js"></script>
+        <script src="js/backgrid-orderable-columns.js"></script>
+        <script src="js/main_extended.js"></script>
+
+    </body>
+</html>

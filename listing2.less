@@ -1,0 +1,203 @@
+@import 'mixins';
+
+.backgrid thead th {
+  border-left: 1px solid #ccc;
+}
+
+.backgrid tbody td {
+  border-left: 1px solid rgba(1, 1, 1, 0);
+}
+
+.listing-container {
+  position: relative;
+}
+
+.listing-dragfield {
+  padding: 5px;
+  background: #CCC;
+  .border-radius(3px);
+  border-style: solid;
+  border-width: 1px;
+  -moz-box-shadow: 1px 1px 4px #888;
+  -webkit-box-shadow: 1px 1px 4px #888;
+  box-shadow: 1px 1px 4px #888;
+  /* Alas, box-shadow is not fully supported by IE < 9 */
+  height: 20px;
+  width: 100px;
+  border-color: #ff0011;
+  font-weight: bold;
+}
+
+.ui-draggable {
+  z-index: 100;
+}
+
+.listing-extra {
+  margin-bottom: 10px;
+}
+
+.listing-tmpcolumn {
+  background-color: #66CC66 !important;
+}
+
+.listing-coldropzone {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  top: 0px;
+  right: 0px;
+}
+
+.listing-columnplaceholder {
+  background-color: #66CC66;
+  border: 1px dashed #007237;
+}
+
+.backgrid th.sortable {
+  vertical-align: top;
+}
+.backgrid th[colspan]:not([colspan="1"]) {
+  text-align: center;
+}
+
+
+@import "variables.less";
+
+.LayoutCanvas .widgetPlaceholder.listing {
+  padding: 0;
+}
+
+.LayoutCanvas .widgetPlaceholder.listing .widgetcontainer {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.LayoutCanvas .widgetPlaceholder.listing .listing-toolbar {
+  margin: 0 7px 7px;
+}
+
+div.backgrid-container {
+  height: auto;
+}
+
+table.backgrid {
+  padding: 0 0 0 0;
+  table-layout: fixed;
+  width: 100%;
+  border: 0;
+  margin: 0 0 4px 0;
+  position: relative;
+}
+
+table.backgrid td.cf-edit-control.editMode:focus {
+  outline: 1px solid rgb(82,168,236);
+}
+
+table.backgrid thead th {
+  text-align: left;
+  font-weight: bold;
+  line-height: 40px;
+  border-top: 1px solid #b4dae0;
+  border-bottom: 1px solid #b4dae0;
+}
+
+table.backgrid th, table.backgrid td {
+  font-weight: normal;
+  font-size: 11px;
+  padding: 0 2px !important; /* important needed because otherwise the colresizable plugin sets it 0 */
+  border: 0px;
+  height: auto;
+  line-height: normal;
+}
+
+table.backgrid > tbody > tr {
+  border-bottom: 1px solid #cee7eb;
+}
+
+table.backgrid > tbody > tr:hover td {
+  background-color: #FBFBFB;
+  border-top: 1px solid #CEE7EB;
+  border-bottom: 1px solid #CEE7EB;
+}
+
+table.backgrid > tbody > tr.cf-selected td {
+  background-color: @selectedBackgroundColorListing;
+  border-top: 1px solid #b4dae0;
+  border-bottom: 1px solid #b4dae0;
+}
+
+table.backgrid > thead > tr > th:first-child {
+  border-top-left-radius: 3px;
+  -moz-top-left-radius: 3px;
+}
+
+table.backgrid > thead > tr > th:last-child {
+  border-top-right-radius: 3px;
+  -moz-top-right-radius: 3px;
+}
+
+/* select-cell styles*/
+table.backgrid > thead > tr > th.select-all-header-cell {
+  width: 24px;
+}
+table.backgrid > tbody > tr > td.select-all-cell {
+  width: 24px;
+}
+
+/* style for non-editable cells */
+table.backgrid > tbody > tr > td {
+  background-color: #FFFFFF;
+}
+
+table.backgrid th, table.backgrid td {
+  line-height: normal;
+  white-space: normal;
+  text-overflow: clip;
+  vertical-align: top;
+}
+
+.backgrid th.descending .sort-caret, .backgrid th.ascending .sort-caret {
+  vertical-align: middle;
+  border: none;
+}
+.backgrid th .sort-caret {
+  margin-left: 0px;
+}
+
+table.backgrid td {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+div.fl-scrolls {
+  height: 18px;
+}
+
+.backgrid .resizeHandler {
+  width: 10px;
+  margin-left: -5px;
+  top: 0;
+  bottom: 0;
+  background-color: #F00;
+  position: absolute;
+  opacity: 0.3;
+  cursor: col-resize;
+}
+
+.backgrid .resizeHandler.grid-draggable {
+  opacity: 1;
+  width: 1px;
+  margin-left: 0px;
+  background-color: #000;
+}
+
+.backgrid .resizeHandler .grid-draggable-cursor {
+  cursor: col-resize;
+  width: 30px;
+  margin-left: -10px;
+  height: 100%;
+}
