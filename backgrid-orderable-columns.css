@@ -13,9 +13,9 @@
 }
 
 .backgrid .orderable-indicator-active {
-   background-color: #000; /* IE8 fallback */
+    background-color: #000; /* IE8 fallback */
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /* IE8 fallback */
-   background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .backgrid thead th.orderable-ordering {
