@@ -4,7 +4,7 @@ var columnsArray = [
     name: "rowSelect",
     cell: "select-row",
     headerCell: "select-all",
-    resizeAble: false,
+    resizeable: false,
     width: 24
   },
   {
@@ -15,7 +15,7 @@ var columnsArray = [
     cell: Backgrid.IntegerCell.extend({
       orderSeparator: ""
     }),
-    resizeAble: true,
+    resizeable: true,
     width: 100,
     minWidth: 50,
     maxWidth: 150
@@ -24,7 +24,7 @@ var columnsArray = [
     name: "name",
     label: "Name",
     cell: "string",
-    resizeAble: true,
+    resizeable: true,
     width: 200,
     minWidth: 150
   },
@@ -32,7 +32,7 @@ var columnsArray = [
     name: "age",
     label: "Age",
     cell: "integer",
-    resizeAble: true,
+    resizeable: true,
     width: 30,
     renderable: true
   },
@@ -40,7 +40,7 @@ var columnsArray = [
     name: "gender",
     label: "Gender",
     cell: "string",
-    resizeAble: true,
+    resizeable: true,
     width: 80,
     renderable: true
 },
@@ -48,7 +48,7 @@ var columnsArray = [
     name: "eyeColor",
     label: "Eye color",
     cell: "string",
-    resizeAble: true,
+    resizeable: true,
     width: 80,
     renderable: true
   },
@@ -56,28 +56,28 @@ var columnsArray = [
     name: "phone",
     label: "Phone",
     cell: "string",
-    resizeAble: true,
+    resizeable: true,
     width: 200
   },
   {
     name: "address",
     label: "Address",
     cell: "string",
-    resizeAble: true,
+    resizeable: true,
     width: 300
   },
   {
     name: "email",
     label: "E-mail",
     cell: "email",
-    resizeAble: true,
+    resizeable: true,
     width: 300
   },
   {
     name: "company",
     label: "Company",
     cell: "string",
-    resizeAble: true,
+    resizeable: true,
     width: 120,
     renderable: true
   },
@@ -85,42 +85,42 @@ var columnsArray = [
     name: "domestic",
     label: "Domestic ($)",
     cell: "number",
-    resizeAble: false,
+    resizeable: false,
     width: 100
   },
   {
     name: "exports",
     label: "Exports ($)",
     cell: "number",
-    resizeAble: false,
+    resizeable: false,
     width: 100
   },
   {
     name: "total",
     label: "Total ($)",
     cell: "number",
-    resizeAble: false,
+    resizeable: false,
     width: 150
   },
   {
     name: "expenditure",
     label: "Expenditure ($)",
     cell: "number",
-    resizeAble: true,
+    resizeable: true,
     width: 150
   },
   {
     name: "profits",
     label: "Profits ($)",
     cell: "number",
-    resizeAble: true,
+    resizeable: true,
     width: 100
   },
   {
     name: "registered",
     label: "Registered",
     cell: "date",
-    resizeAble: true,
+    resizeable: true,
     width: 100,
     renderable: true
   },
@@ -128,7 +128,7 @@ var columnsArray = [
     name: "isActive",
     label: "Active",
     cell: "boolean",
-    resizeAble: true,
+    resizeable: true,
     width: 70,
     maxWidth: 70,
     minWidth: 70,
@@ -141,7 +141,7 @@ var columnsArray = [
       orderSeparator: "",
       decimals: 6
     }),
-    resizeAble: true,
+    resizeable: true,
     width: 110,
     minWidth: 100,
     maxWidth: 150
@@ -153,7 +153,7 @@ var columnsArray = [
       orderSeparator: "",
       decimals: 6
     }),
-    resizeAble: true,
+    resizeable: true,
     width: 110,
     minWidth: 100,
     maxWidth: 150,
@@ -163,7 +163,7 @@ var columnsArray = [
     name: "notes",
     label: "Notes",
     cell: "string",
-    resizeAble: false
+    resizeable: false
   }
 ];
 
