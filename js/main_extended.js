@@ -336,16 +336,13 @@ pageableTerritories.fetch({reset: true});
 
 // Add sizeable columns
 var sizeAbleCol = new Backgrid.Extension.SizeAbleColumns({
-  collection: pageableTerritories,
-  columns: columns
+  grid: pageableGrid
 });
 $backgridContainer.find("thead").before(sizeAbleCol.render().el);
 
 // Add resize handlers
 var sizeHandler = new Backgrid.Extension.SizeAbleColumnsHandlers({
-  sizeAbleColumns: sizeAbleCol,
-  grid: pageableGrid,
-  saveModelWidth: true
+  sizeAbleColumns: sizeAbleCol
 });
 $backgridContainer.find("thead").before(sizeHandler.render().el);
 
@@ -356,7 +353,6 @@ columns.on("resize", function(columnModel, newWidth, oldWidth) {
 
 // Make columns reorderable
 var orderHandler = new Backgrid.Extension.OrderableColumns({
-  grid: pageableGrid,
   sizeAbleColumns: sizeAbleCol
 });
 $backgridContainer.find("thead").before(orderHandler.render().el);

@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5b587310-f499-452b-9417-9699d13c6740" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/jsLinters/jshint.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/backgrid-grouped-columns.js" afterPath="$PROJECT_DIR$/js/backgrid-grouped-columns.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/main_extended.js" afterPath="$PROJECT_DIR$/js/main_extended.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="orderable-columns.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,18 +38,18 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="18.576923" vertical-offset="483" max-vertical-offset="1275">
+            <state vertical-scroll-proportion="0.9230769" vertical-offset="24" max-vertical-offset="1275">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main_extended.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="main_extended.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/main_extended.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3279" max-vertical-offset="7412">
-              <caret line="217" column="23" selection-start-line="217" selection-start-column="23" selection-end-line="217" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.7863129" vertical-offset="5472" max-vertical-offset="7344">
+              <caret line="355" column="21" selection-start-line="355" selection-start-column="21" selection-end-line="355" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -70,10 +67,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="backgrid-sizeable-columns.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="backgrid-sizeable-columns.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/backgrid-sizeable-columns.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5726257" vertical-offset="1256" max-vertical-offset="5729">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1256" max-vertical-offset="5729">
               <caret line="98" column="63" selection-start-line="98" selection-start-column="63" selection-end-line="98" selection-end-column="63" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -120,10 +117,10 @@
         <option value="$PROJECT_DIR$/backgrid-orderable-columns.js" />
         <option value="$PROJECT_DIR$/backgrid-orderable-columns.css" />
         <option value="$PROJECT_DIR$/css/backgrid-sizeable-columns.css" />
-        <option value="$PROJECT_DIR$/js/main_extended.js" />
         <option value="$PROJECT_DIR$/js/backgrid-grouped-columns.js" />
         <option value="$PROJECT_DIR$/js/backgrid-orderable-columns.js" />
         <option value="$PROJECT_DIR$/js/backgrid-sizeable-columns.js" />
+        <option value="$PROJECT_DIR$/js/main_extended.js" />
       </list>
     </option>
   </component>
@@ -372,22 +369,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="18.576923" vertical-offset="483" max-vertical-offset="1275">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/main_extended.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3279" max-vertical-offset="7412">
-          <caret line="217" column="23" selection-start-line="217" selection-start-column="23" selection-end-line="217" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/backgrid-paginator.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7344">
@@ -418,11 +399,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/backgrid-sizeable-columns.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5726257" vertical-offset="1256" max-vertical-offset="5729">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1256" max-vertical-offset="5729">
           <caret line="98" column="63" selection-start-line="98" selection-start-column="63" selection-end-line="98" selection-end-column="63" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9230769" vertical-offset="24" max-vertical-offset="1275">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/main_extended.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7863129" vertical-offset="5472" max-vertical-offset="7344">
+          <caret line="355" column="21" selection-start-line="355" selection-start-column="21" selection-end-line="355" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
