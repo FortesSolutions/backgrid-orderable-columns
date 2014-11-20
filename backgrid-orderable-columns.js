@@ -6,27 +6,28 @@
  Licensed under the MIT @license.
  */
 (function (root, factory) {
-
   // CommonJS
   if (typeof exports == "object") {
     module.exports = factory(require("underscore"), require("backgrid"));
   }
+  // AMD. Register as an anonymous module.
+  else if (typeof define === 'function' && define.amd) {
+    define(['underscore', 'backgrid'], factory);
+  }
   // Browser
   else {
-    factory(root._, root.Backgrid, root.moment);
+    factory(root._, root.Backgrid);
   }
-
 }(this, function (_, Backgrid) {
   "use strict";
 
   // Adds width support to columns
   Backgrid.Extension.OrderableColumns = Backbone.View.extend({
     dragHooks: {},
-    /**
-     Initializer.
 
-     @param {Object} options
-     @param {Backbone.Collection.<Backgrid.Column>|Array.<Backgrid.Column>|Array.<Object>} options.columns Column metadata.
+    /**
+     * Initializer
+     * @param options
      */
     initialize: function (options) {
       this.sizeAbleColumns = options.sizeAbleColumns;
@@ -41,7 +42,8 @@
     },
 
     /**
-     Renders a column group.
+     * Adds handlers to reorder the columns
+     * @returns {Backgrid.Extension.OrderableColumns}
      */
     render: function () {
       var self = this;
@@ -67,7 +69,7 @@
           }
           else {
             orderable = false;
-            var headerRows = self.grid.header.headerRows;
+            var headerRows = self.header.headerRows || [self.header.row];
             if (headerRows) {
               var subColumnNames = headerRows[rowIndex].columns.at(index).get("childColumns");
               startIndex = self.columns.indexOf(self.columns.get(_.first(self.columns.where({ name: subColumnNames[0]}))));
@@ -191,7 +193,7 @@
                     var oldIndex = startIndex;
                     var newIndex = closestIndex;
                     var movedRight = oldIndex < newIndex;
-                    var deltaIndex = newIndex - oldIndex;
+                    var deltaIndex = newIndex - oldIndex
 
                     // Update position attributes
                     self.columns.each(function (model, ind) {
@@ -240,6 +242,11 @@
 
       return this;
     },
+
+    /**
+     * Adds indicators which will show at which spot the column will be placed while dragging
+     * @private
+     */
     addIndicators: function () {
       var self = this;
       self.indicators = [];
@@ -257,13 +264,21 @@
       });
 
       // Add trailing indicator
-      if (_.last(self.headerCells).column.get("orderable")) {
+      if (!_.isEmpty(self.headerCells) && _.last(self.headerCells).column.get("orderable")) {
         self.$el.append(self.createIndicator(self.headerCells.length, null));
       }
 
       // Set indicator height
-      self.setIndicatorHeight();
+      self.setIndicatorHeight(self.grid.header.$el.height());
     },
+
+    /**
+     * Create a single indicator
+     * @param {Integer} index
+     * @param {Backgrid.Cell} cell
+     * @returns {*|JQuery|any|jQuery}
+     * @private
+     */
     createIndicator: function (index, cell) {
       var self = this;
 
@@ -276,22 +291,42 @@
 
       return $indicator;
     },
+
+    /**
+     * Sets height of all indicators matching the table header
+     * @private
+     */
     setIndicatorHeight: function () {
       this.$el.children().height(this.grid.header.$el.height());
     },
+
+    /**
+     * Attach event handlers
+     * @private
+     */
     attachEvents: function () {
       var self = this;
       self.listenTo(self.columns, "change:resizeAble", self.render);
       self.listenTo(self.columns, "resize", self.handleColumnResize);
       self.listenTo(self.columns, "remove", self.handleColumnRemove);
-      self.listenTo(self.grid.header, "backgrid:header:rendered", self.handleHeaderRender);
-      self.listenTo(self.grid.collection, "backgrid:refresh", self.updateHandlerPosition);
+      self.listenTo(self.grid.collection, "backgrid:colgroup:updated", self.updateHandlerPosition);
+      self.listenTo(self.grid.collection, "backgrid:colgroup:changed", self.handleHeaderRender);
     },
+
+    /**
+     * Handlers when columns are resized
+     * @private
+     */
     handleColumnResize: function () {
       var self = this;
       self.updateHandlerPosition();
       self.setIndicatorHeight();
     },
+
+    /**
+     * Handler when header is (re)rendered
+     * @private
+     */
     handleHeaderRender: function () {
       var self = this;
       // Wait for callstack to be cleared
@@ -301,6 +336,13 @@
         self.updateHandlerPosition();
       });
     },
+
+    /**
+     * Handler for when a column is removed
+     * @param {Backgrid.Column} model
+     * @param {Backgrid.Columns} collection
+     * @private
+     */
     handleColumnRemove: function (model, collection) {
       // Get position of removed model
       var removedPosition = model.get("displayOrder");
@@ -312,6 +354,11 @@
         }
       });
     },
+
+    /**
+     * Updates the position of all handlers
+     * @private
+     */
     updateHandlerPosition: function () {
       var self = this;
       self.indicatorPositions = {};
@@ -336,22 +383,28 @@
         // Get handler for current column and update position
         $indicator.css("left", left);
       });
+      self.setIndicatorHeight();
     },
+
+    /**
+     * Finds and saves current column header elements
+     * @private
+     */
     setHeaderElements: function () {
       var self = this;
-      var rows = self.header.headerRows;
+      var rows = self.header.headerRows || [self.header.row];
       self.headerCells = [];
 
       // Loop all rows
       _.each(rows, function (row) {
         // Loop cells of row
         _.each(row.cells, function (cell) {
-          var columnModel = self.columns.where({name: cell.column.get("name")});
+          var columnModel = self.columns.get({cid: cell.column.cid});
           if (!_.isEmpty(columnModel)) {
             self.headerCells.push({
               $el: cell.$el,
               el: cell.el,
-              column: _.first(columnModel)
+              column: columnModel
             });
           }
         });
@@ -366,14 +419,31 @@
         return cell.el;
       });
     },
+
+    /**
+     * Adds a drag hook
+     * @param {String} id
+     * @param {Function} hook
+     */
     addDragHook: function (id, hook) {
       this.dragHooks[id] = hook;
     },
+
+    /**
+     * Removes a drag hook
+     * @param {String} id
+     */
     removeDragHook: function (id) {
       if (this.dragHooks.hasOwnProperty(id)) {
         delete this.dragHooks[id];
       }
     },
+
+    /**
+     * Invokes a drag hook
+     * @param {String} key
+     * @private
+     */
     dragHookInvoke: function (key) {
       var args = [].slice.apply(arguments);
       args.shift();
@@ -383,6 +453,12 @@
         }
       });
     },
+
+    /**
+     * Checks whether the ordering should be prevented
+     * @returns {boolean}
+     * @private
+     */
     dragHookPreventOrder: function () {
       var prevent = false;
       _.each(this.dragHooks, function (obj) {
@@ -392,6 +468,12 @@
       });
       return prevent;
     },
+
+    /**
+     * Helper function to stop event propagation
+     * @param e
+     * @private
+     */
     _stopEvent: function (e) {
       if (e.stopPropagation) {
         e.stopPropagation();
@@ -404,10 +486,17 @@
     }
   });
 
+  /**
+   * Extendable
+   * @type {Function}
+   */
   var orderableDragHook = Backgrid.Extension.OrderableDragHook = function () {
     this.initialize.apply(this, arguments);
   };
 
+  /**
+   *  Prototype for the drag hook
+   */
   _.extend(orderableDragHook.prototype, {
     initialize: function () {
     },
@@ -418,6 +507,23 @@
     dragEnd: function () {
     },
     preventOrder: function () {
+    }
+  });
+
+  /**
+   * Sample collection for orderable columns
+   */
+  Backgrid.Extension.OrderableColumns.orderableColumnCollection = Backgrid.Columns.extend({
+    sortKey: "displayOrder",
+    comparator: function(item) {
+      return item.get(this.sortKey) || 1e6;
+    },
+    setPositions: function() {
+      _.each(this.models, function(model, index) {
+        // If a displayOrder is defined already, do not touch
+        model.set("displayOrder", model.get("displayOrder") || index + 1, {silent: true});
+      });
+      return this;
     }
   });
 }));
