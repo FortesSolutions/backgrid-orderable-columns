@@ -193,7 +193,7 @@
                     var oldIndex = startIndex;
                     var newIndex = closestIndex;
                     var movedRight = oldIndex < newIndex;
-                    var deltaIndex = newIndex - oldIndex
+                    var deltaIndex = newIndex - oldIndex;
 
                     // Update position attributes
                     self.columns.each(function (model, ind) {
