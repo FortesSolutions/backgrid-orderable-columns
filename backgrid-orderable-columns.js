@@ -225,9 +225,6 @@
 
         // Sort columns
         self.columns.sort();
-
-        // Refresh body
-        self.grid.body.refresh();
       }
 
       // Reset drag state
@@ -452,9 +449,9 @@
      */
     attachEvents: function () {
       var self = this;
-      //self.listenTo(self.columns, "change:resizeAble", self.render);
       self.listenTo(self.columns, "resize", self.handleColumnResize);
       self.listenTo(self.columns, "remove", self.handleColumnRemove);
+      self.listenTo(self.columns, "sort", self.handleColumnSort);
       self.listenTo(self.grid.collection, "backgrid:colgroup:updated", self.updateIndicatorPosition);
       self.listenTo(self.grid.collection, "backgrid:colgroup:changed", self.handleHeaderRender);
 
@@ -503,6 +500,15 @@
           mod.set("displayOrder", mod.get("displayOrder") - 1, {silent: true});
         }
       });
+    },
+
+    /**
+     * Handler when the column collection is sorted
+     * @private
+     */
+    handleColumnSort: function() {
+      // Refresh body
+      this.grid.body.refresh();
     },
 
     /**
