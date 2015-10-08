@@ -457,7 +457,7 @@
 
       // Listen to window resize events
       var resizeEvtHandler = _.debounce(_.bind(self.updateIndicatorPosition, self), 250);
-      self.listenTo(self._asEvents(window), "resize", resizeEvtHandler);
+      $(window).on("resize", self.resizeEvtHandler);
     },
 
     /**
@@ -616,25 +616,10 @@
       e.returnValue = false;
     },
 
-    /**
-     * Use Backbone Events listenTo/stopListening with any DOM element
-     *
-     * @param {DOM Element}
-     * @return {Backbone Events style object}
-     **/
-    _asEvents: function(el) {
-      var args;
-      return {
-        on: function(event, handler) {
-          if (args) throw new Error("this is one off wrapper");
-          el.addEventListener(event, handler, false);
-          args = [event, handler];
-        },
-        off: function() {
-          el.removeEventListener.apply(el, args);
-        }
-      };
-    }
+    remove: function() {
+      $(window).off("resize", this.resizeEvtHandler);
+      Backbone.View.prototype.remove.call(this);
+	  }
   });
 
   /**
