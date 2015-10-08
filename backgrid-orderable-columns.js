@@ -619,7 +619,7 @@
     remove: function() {
       $(window).off("resize", this.resizeEvtHandler);
       Backbone.View.prototype.remove.call(this);
-	  }
+    }
   });
 
   /**
