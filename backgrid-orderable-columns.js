@@ -456,7 +456,7 @@
       self.listenTo(self.grid.collection, "backgrid:colgroup:changed", self.handleHeaderRender);
 
       // Listen to window resize events
-      var resizeEvtHandler = _.debounce(_.bind(self.updateIndicatorPosition, self), 250);
+      self.resizeEvtHandler = _.debounce(_.bind(self.updateIndicatorPosition, self), 250);
       $(window).on("resize", self.resizeEvtHandler);
     },
 

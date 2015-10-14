@@ -1,6 +1,6 @@
 {
   "name": "backgrid-orderable-columns",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Backgrid.js extension for (re)orderable columns.",
   "main": "backgrid-orderable-columns.js",
   "scripts": {
