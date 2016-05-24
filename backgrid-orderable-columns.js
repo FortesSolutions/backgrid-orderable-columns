@@ -80,7 +80,7 @@
 
           // If orderable, add handler
           if (orderable) {
-            cell.$el.on("mousedown",
+            cell.$el.off("mousedown").on("mousedown",
               _.bind(self.mouseDownHandler, {
                 view: self,
                 cell: cell,
